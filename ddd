@@ -1,0 +1,70 @@
+repeat task.wait() until game:IsLoaded() 
+repeat task.wait() until game.ReplicatedStorage and game.ReplicatedStorage.Inventories and game.Players.LocalPlayer and game.ReplicatedStorage.Inventories:FindFirstChild(game.Players.LocalPlayer.Name) and workspace.CurrentCamera:FindFirstChild("Viewmodel")
+local repstorage = game.ReplicatedStorage
+items = {
+    "bow",
+    "sword",
+    "axe"
+}
+swordTable = {
+    Exhibition = {
+        ["wood"] = {"13052416562", "13052417584"},
+        ["stone"] = {"13052307742", "13052309606"},
+        ["iron"] = {"13045938020", "13045940316"},
+        ["diamond"] = {"13045611120", "13045612849"},
+        ["emerald"] = {"13052515751", "13052517600"}
+    },
+    different = {
+        ["wood"] = {"13156260367", "13156264394"},
+        ["stone"] = {"13156535067", "13156533518"},
+        ["iron"] = {"13156652510", "13156654736"},
+        ["diamond"] = {"13156798963", "13156800982"},
+        ["emerald"] = {"13160122132", "13160122773"}
+    },	
+    x16 = {
+        ["wood"] = {"13156260367", "13156264394"},
+        ["stone"] = {"13160874844", "13160875605"},
+        ["iron"] = {"13045938020", "13045940316"},
+        ["diamond"] = {"13045611120", "13045612849"},
+        ["emerald"] = {"13052515751", "13052517600"}
+    }
+}
+
+local currentOverlay = swordTable.x16
+workspace.CurrentCamera.Viewmodel.ChildAdded:Connect(function(v)
+    if v:IsA("Accessory") and v:FindFirstChild("Handle") then
+        for i, v2 in pairs(items) do
+            if string.find(v.Name, v2) then
+                if string.find(v.Name, "sword") then
+                    if v.Handle:FindFirstChild("gem") then 
+                        v.Handle:FindFirstChild("gem"):Destroy()
+                    elseif v.Handle:FindFirstChild("Neon") then
+                        v.Handle:FindFirstChild("Neon"):Destroy()
+                        v.Handle.Size = v.Handle.Size * 3
+                    end
+                    v:FindFirstChild("Handle").MeshId = "rbxassetid://" .. currentOverlay[string.split(v.Name, "_")[1]][1]
+                    v:FindFirstChild("Handle").TextureID = "rbxassetid://" .. currentOverlay[string.split(v.Name, "_")[1]][2]
+                end    
+            end
+        end 
+    end
+end)
+repeat task.wait() until workspace:FindFirstChild(game.Players.LocalPlayer.Name)
+game.Players.LocalPlayer.Character.ChildAdded:Connect(function(v)
+    if v:IsA("Accessory") and v:FindFirstChild("Handle") then
+        for i, v2 in pairs(items) do
+            if string.find(v.Name, v2) then
+                if string.find(v.Name, "sword") then
+                    if v.Handle:FindFirstChild("gem") then 
+                        v.Handle:FindFirstChild("gem"):Destroy()
+                    elseif v.Handle:FindFirstChild("Neon") then
+                        v.Handle:FindFirstChild("Neon"):Destroy()
+                        v.Handle.Size = v.Handle.Size * 3
+                    end
+                    v:FindFirstChild("Handle").MeshId = "rbxassetid://" .. currentOverlay[string.split(v.Name, "_")[1]][1]
+                    v:FindFirstChild("Handle").TextureID = "rbxassetid://" .. currentOverlay[string.split(v.Name, "_")[1]][2]
+                end    
+            end
+        end
+    end
+end)
